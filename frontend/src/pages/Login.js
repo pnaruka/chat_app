@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -37,6 +38,11 @@ const Login = () => {
           <button type="submit" className="btn btn-primary btn-block mb-4">Submit</button>
           {/* {error && <div className='error'>{error}</div>} */}
         </form>
+        </div>
+      </div>
+      <div className='to-signup row justify-content-center'>
+        <div  className='col-md-6 offset-md-3'>
+          <Link to='/signup'> <button className='btn btn-light'>Signup</button> </Link>
         </div>
       </div>
     </div>
