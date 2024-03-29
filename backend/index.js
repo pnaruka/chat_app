@@ -9,6 +9,7 @@ const DB_URL = process.env.DB_URL;
 
 
 const app = express();
+app.use(express.json());
 app.use('/user',UserRouter);
 
 app.get('/', (req,res)=>{

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { UserModel } = require('../models/userModel');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const createToken = require('../utils/createToken');
 
 const createUser = asyncHandler(async (req, res) => {
     const { user } = req.body;
@@ -37,7 +38,8 @@ const createUser = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Failed to create user.');
     }
-    return newUser;
+    const token = createToken(newUser._id, newUser.email);
+    return res.status(201).json({token});
 
 });
 
