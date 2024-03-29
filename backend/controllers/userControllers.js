@@ -34,15 +34,42 @@ const createUser = asyncHandler(async (req, res) => {
         password: hashPassword,
         profilePic: user.profilePic
     });
-    if(!newUser){
+    if (!newUser) {
         res.status(400);
         throw new Error('Failed to create user.');
     }
     const token = createToken(newUser._id, newUser.email);
-    return res.status(201).json({token});
+    return res.status(201).json({ token });
 
 });
 
+const loginUser = asyncHandler(
+    async (req, res) => {
+        const { user } = req.body;
+        if (!user.email || !user.password) {
+            res.status(400);
+            throw new Error('Please fill all required fields.');
+        }
+        if (!validator.isEmail(user.email)) {
+            res.status(400);
+            throw new Error('Invalid email');
+        }
+        const userExists = await UserModel.findOne({ email: user.email });
+        if (!userExists) {
+            res.status(400);
+            throw new Error('Email not registered.');
+        }
+        const passMatch = await bcrypt.compare(user.password, userExists.password);
+        if(!passMatch){
+            res.status(400);
+            throw new Error('Incorrect password.');
+        }
+        const token = createToken(userExists._id, userExists.email);
+        return res.status(200).json({ token });
+    }
+)
+
 module.exports = {
-    createUser
+    createUser,
+    loginUser
 }
