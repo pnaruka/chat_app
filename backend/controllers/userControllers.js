@@ -39,7 +39,11 @@ const createUser = asyncHandler(async (req, res) => {
         throw new Error('Failed to create user.');
     }
     const token = createToken(newUser._id, newUser.email);
-    return res.status(201).json({ token });
+    return res.status(201).json({
+        name:newUser.name,
+        email: newUser.email,
+        profilePic: newUser.profilePic, 
+        token });
 
 });
 
@@ -65,7 +69,11 @@ const loginUser = asyncHandler(
             throw new Error('Incorrect password.');
         }
         const token = createToken(userExists._id, userExists.email);
-        return res.status(200).json({ token });
+        return res.status(200).json({
+            name:userExists.name,
+            email: userExists.email,
+            profilePic: userExists.profilePic,
+            token });
     }
 )
 
