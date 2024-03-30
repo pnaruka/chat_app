@@ -4,6 +4,7 @@ const { default: mongoose } = require('mongoose');
 const UserRouter = require('./routes/UserRouter');
 const ChatRouter = require('./routes/ChatRouter');
 const requireAuth = require('./middlewares/requireAuth');
+const { notFound, errorHandler } = require('./middlewares/errorHandlers');
 
 configDotenv({path:'./.env'});
 const port = process.env.PORT || 5000;
@@ -19,6 +20,9 @@ app.use('/chat', ChatRouter);
 app.get('/', (req,res)=>{
     return res.send("Hallo");
 })
+
+app.use(notFound);
+app.use(errorHandler);
 
 mongoose.connect(DB_URL).then(()=>{
     console.log('DB Connected');
