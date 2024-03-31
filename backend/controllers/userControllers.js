@@ -28,7 +28,7 @@ const createUser = asyncHandler(async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(user.password, salt);
 
-    const newUser = UserModel.create({
+    const newUser = await UserModel.create({
         name: user.name,
         email: user.email,
         password: hashPassword,
@@ -39,6 +39,7 @@ const createUser = asyncHandler(async (req, res) => {
         throw new Error('Failed to create user.');
     }
     const token = createToken(newUser._id, newUser.email);
+    //console.log(newUser);
     return res.status(201).json({
         name:newUser.name,
         email: newUser.email,
