@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { useSignup } from '../hooks/useSignup';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({username, email, password});
+    signup({user:{name:username, email, password}})
+    //console.log({username, email, password});
   }
 
   return (
@@ -21,7 +24,7 @@ const Signup = () => {
         <div className='col-md-6'>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="inputUsername" className="form-label">Username</label>
+              <label htmlFor="inputUsername" className="form-label">Name</label>
               <input type="text" className="form-control" id="inputUsername"
                 value={username}
                 onChange={(e) => (setUsername(e.target.value))} />
@@ -43,6 +46,14 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      {error ?
+        <div className='error-div row justify-content-center mt-3 --bs-danger-bg-subtle'>
+          <div className="col-md-6 p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+            {error}
+          </div>
+        </div>
+        :
+        <></>}
     </div>
   )
 }
