@@ -13,11 +13,11 @@ const DB_URL = process.env.DB_URL;
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use('/user',UserRouter);
 app.use(requireAuth);
 app.use('/chat', ChatRouter);
-app.use(cors());
 
 app.get('/', (req,res)=>{
     return res.send("Hallo");
