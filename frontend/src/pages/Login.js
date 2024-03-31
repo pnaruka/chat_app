@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log("Handle submit:", {username,password});
-    //login({ username, password });
-
-    console.log({ username, password });
+    login({ email:email, password: password })
+    //console.log({ email:email, password: password });
   }
 
   return (
@@ -23,12 +23,12 @@ const Login = () => {
       <div className='login-form row justify-content-center'>
         <div className='col-md-6'>
         <form onSubmit={handleSubmit}>
-          <div className="form-outline mb-4">
-            <label htmlFor="inputUsername" className="form-label">Username</label>
-            <input type="text" className="form-control" id="inputUsername"
-              value={username}
-              onChange={(e) => (setUsername(e.target.value))} />
-          </div>
+        <div className="form-outline mb-4">
+              <label htmlFor="inputEmail" className="form-label">Email address</label>
+              <input type="email" className="form-control" id="inputEmail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} />
+            </div>
           <div className="form-outline mb-4">
             <label htmlFor="inputPassword" className="form-label">Password</label>
             <input type="password" className="form-control" id="inputPassword"

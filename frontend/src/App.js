@@ -1,12 +1,21 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { assignUSer, getUser } from "./contexts_store/reducer/user";
+import { useEffect } from "react";
+import readToken from "./utils/useReadToken";
 
 function App() {
   const user = useSelector(getUser);
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(assignUSer(readToken()));
+  },[dispatch]);
+
   return (
     <div className="App">
       <Routes>
