@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+  }
+  
+  .chat-page {
+    flex: 1; /* This makes left-div take remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .msg-page {
+    flex: 0 0 70%; /* This makes right-div take 70% of space */
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
