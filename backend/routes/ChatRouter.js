@@ -1,10 +1,8 @@
 const express = require('express');
+const { createChat } = require('../controllers/chatControllers');
 
 const ChatRouter = express.Router();
 
-ChatRouter.get('/user', (req, res)=>{
-    //console.log(req.user);
-    return res.status(200).json({wazzup:"bitches"});
-});
+ChatRouter.get('/create', createChat);
 
 module.exports = ChatRouter;
