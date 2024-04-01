@@ -18,7 +18,7 @@ const HomePage = () => {
     <div>
       <h1>HomePage</h1>
       <button onClick={handleClick}>Click</button>
-      <div className='container'>
+      <div className='home-container'>
         <div className='chat-page'>
           <ChatPage />
         </div>
