@@ -78,7 +78,24 @@ const loginUser = asyncHandler(
     }
 )
 
+const allUsers =  asyncHandler( async(req, res) => {
+    const keyword = req.query.search ? {
+        $or: [
+            { name: {$regex: req.query.search, $options: "i"}},
+            { email: {$regex: req.query.search, $options: "i"}}
+        ]
+    } : {};
+
+    const users = await UserModel.find(keyword).find({_id:{$ne: req.user._id}});
+    if(!users){
+        res.status(400);
+        throw new Error('No users');
+    }
+    res.status(200).json(users);
+});
+
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    allUsers
 }
