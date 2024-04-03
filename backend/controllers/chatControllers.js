@@ -45,17 +45,24 @@ const createChat = asyncHandler(async (req, res) => {
 const getAllChats = asyncHandler(async (req, res) => {
     const userId = req.user._id;
 
-    const chat = await ChatModel.find({
-        $and: [
-            { users: { $elemMatch: { $eq: userId } } }
-        ]
-    }).populate("users", "-password").populate("lastMessage");
+    try {
+        const chat = await ChatModel.find({
+            $and: [
+                { users: { $elemMatch: { $eq: userId } } }
+            ]
+        }).populate("users", "-password")
+            .populate("lastMessage")
+            .populate("groupAdmin")
+            .sort({ updatedAt: -1 });
 
-    if(!chat){
-        return res.status(400).send("No chats to show.");
+        if (!chat) {
+            return res.status(204).send("No chats to show.");
+        }
+        //console.log(chat);
+        return res.status(200).json(chat);
+    } catch (error) {
+        return res.status(500).json(error);
     }
-    //console.log(chat);
-    return res.status(200).json(chat);
 
 })
 
