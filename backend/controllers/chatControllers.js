@@ -127,9 +127,49 @@ const deleteGroup = asyncHandler( async(req, res)=>{
     }
 })
 
+const groupAddUser = asyncHandler( async(req, res)=>{
+    const {groupId, userId} = req.body;
+    const added = await ChatModel.findByIdAndUpdate(
+        groupId,
+        {
+            $push: {users: userId}
+        },
+        {new: true}
+    ).populate("users", "-password")
+     .populate("groupAdmin", "-password");
+
+     if(!added){
+        return res.status(404).send("Chat not found.");
+     }
+     else{
+        return res.status(200).json(added);
+     }
+} );
+
+const groupRemoveUser = asyncHandler( async(req, res)=>{
+    const {groupId, userId} = req.body;
+    const removed = await ChatModel.findByIdAndUpdate(
+        groupId,
+        {
+            $pull: {users: userId}
+        },
+        {new: true}
+    ).populate("users", "-password")
+     .populate("groupAdmin", "-password");
+
+     if(!removed){
+        return res.status(404).send("Chat not found.");
+     }
+     else{
+        return res.status(200).json(removed);
+     }
+} );
+
 module.exports = {
     createChat,
     getAllChats,
     createGroup,
-    deleteGroup
+    deleteGroup,
+    groupAddUser,
+    groupRemoveUser
 }
