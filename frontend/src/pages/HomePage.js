@@ -5,6 +5,7 @@ import React from 'react'
 //import { useDispatch, useSelector } from 'react-redux'
 import ChatPage from './ChatPage';
 import Messages from './Messages';
+import Drawer from './Drawer';
 import './Homepage.css'
 
 const HomePage = () => {
@@ -16,14 +17,15 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>HomePage</h1>
-      <button onClick={handleClick}>Click</button>
-      <div className='home-container'>
-        <div className='chat-page'>
-          <ChatPage />
-        </div>
-        <div className='msg-page'>
-          <Messages />
+      <Drawer />
+      <div className='container mt-5 p-3'>
+        <div className='home-container'>
+          <div className='chat-page'>
+            <ChatPage />
+          </div>
+          <div className='msg-page'>
+            <Messages />
+          </div>
         </div>
       </div>
     </div>

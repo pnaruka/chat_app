@@ -9,20 +9,32 @@ const ChatPage = () => {
 
   const fetchChat = async () => {
     const headers = { 'Authorization': `Bearer ${user.token}` };
-    console.log(headers);
-    const data = await axios.get('http://localhost:5000/chat/show', {
+    //const data = 
+    await axios.get('http://localhost:5000/chat/show', {
       headers: headers
     })
       .then((res) => {
-        console.log(res.data);
-        return res.data.map((chat) => chat.users.find(u => u.email !== user.email))
+        console.log(res);
+        setChats(res.data.map((chat) => {
+          if (chat.isGroupChat)
+            return {
+              _id: chat._id,
+              chatName: chat.chatName,
+              users: chat.users
+            }
+          else
+            return {
+              _id: chat._id,
+              chatName: chat.users.find(u => u.email !== user.email).name,
+              users: chat.users
+            }
+        }))
       })
       .catch((error) => {
         //console.log(error);
       });
-    setChats(data);
-
-    console.log(data);
+      
+    console.log(chats);
   };
 
   useEffect(() => {
@@ -33,13 +45,13 @@ const ChatPage = () => {
   return (
     <div>
       <h6>Chats</h6>
-        {chats ?
-        <ul className='list-group'>
-          {chats.map((chat) => <li className='list-group-item' key={chat._id}>{chat.name}</li>)}
-          </ul>
-          :
-          <></>
-        }
+      {chats ?
+        <ul className='list-group list-group-flush list-group-item-light'>
+          {chats.map((chat) => <li className='list-group-item' key={chat._id}>{chat.chatName}</li>)}
+        </ul>
+        :
+        <></>
+      }
     </div>
   )
 }
