@@ -80,7 +80,7 @@ const createGroup = asyncHandler(async (req, res) => {
     try {
         users.push(req.user._id);
         const groupChat = await ChatModel.create({
-            chatName: req.body.chatName,
+            chatName: req.body.groupName,
             users: users,
             isGroupChat: true,
             groupAdmin: req.user._id //check please
