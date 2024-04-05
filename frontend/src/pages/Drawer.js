@@ -1,12 +1,16 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { getUser } from '../contexts_store/reducer/user'
+import './Drawer.css';
 
 const Drawer = () => {
+    const user = useSelector(getUser);
     return (
         <nav className="navbar bg-body-tertiary fixed-top">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">baat</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                   {/*<span className="navbar-toggler-icon"></span> -->*/}<img src={user.profilePic} alt='img' className='nav-profile-pic'/>
                 </button>
                 <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div className="offcanvas-header">

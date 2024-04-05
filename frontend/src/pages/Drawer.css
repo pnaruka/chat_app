@@ -1,0 +1,5 @@
+.nav-profile-pic{
+    border-radius: 50%; /* Makes the image round */
+      width: 45px; /* Set width as needed */
+      height: 35px;
+}
