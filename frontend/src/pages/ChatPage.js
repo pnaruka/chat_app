@@ -26,10 +26,9 @@ const ChatPage = () => {
         : <></>
       }
       {chats ?
-        <ul className='list-group list-group-flush list-group-item-light'>
-          {chats.map((chat) => <li className='list-group-item' key={chat._id}>
-            <div className="row row-cols-1 row-cols-md-1 g-4">
-              <div className="col">
+        <div className="row row-cols-1 row-cols-md-1 g-4">
+          {chats.map((chat) =>
+              <div className="col" key={chat._id}>
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">{chat.chatName}</h5>
@@ -37,9 +36,8 @@ const ChatPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </li>)}
-        </ul>
+            )}
+          </div>
         :
         <></>
       }
