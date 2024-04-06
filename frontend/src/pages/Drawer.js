@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getUser } from '../contexts_store/reducer/user'
 import './Drawer.css';
 import { useLogout } from '../hooks/useLogOut';
+import { useSearchUsers } from '../hooks/useSearchUsers';
 
 const Drawer = () => {
+    const {fetchUsers, searchResults} = useSearchUsers();
     const user = useSelector(getUser);
     const {logout} = useLogout();
+    const [searchKey, setSearchKey] = useState('');
+
     return (
         <nav className="navbar bg-body-tertiary fixed-top">
             <div className="container-fluid">
@@ -20,10 +24,30 @@ const Drawer = () => {
                         <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div className="offcanvas-body">
-                        <form className="d-flex mt-3" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Type a name" aria-label="Search" />
-                            <button className="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        <div className="d-flex mt-3">
+                            <input className="form-control me-2" type="search" placeholder="Type a name" aria-label="Search"
+                            value={searchKey}
+                            onChange={(e)=> setSearchKey(e.target.value)} />
+                            <button className="btn btn-outline-success" type="submit" onClick={()=>{fetchUsers(searchKey,user)}}>Search</button>
+                        </div>
+                        { searchResults ?
+                            <div className="d-flex mt-3">
+                            <div className="row row-cols-1 row-cols-md-1 g-4">
+                            {searchResults.map((item) =>
+                                <div className="col" key={item._id}>
+                                  <div className="card">
+                                    <div className="card-body">
+                                      <h5 className="card-title">{item.name}</h5>
+                                      <p className="card-text">{item.email || ""}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            </div>
+                            :
+                            <></>
+                        }
                         <div className="d-flex mt-3">
                             <button className="btn btn-danger" data-bs-dismiss="offcanvas" onClick={logout}>Logout</button>
                         </div>
