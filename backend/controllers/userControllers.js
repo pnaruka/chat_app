@@ -86,7 +86,7 @@ const allUsers =  asyncHandler( async(req, res) => {
         ]
     } : {};
 
-    const users = await UserModel.find(keyword).find({_id:{$ne: req.user._id}});
+    const users = await UserModel.find(keyword).find({_id:{$ne: req.user._id}}).select("-password");
     if(!users){
         res.status(400);
         throw new Error('No users');
