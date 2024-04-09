@@ -3,3 +3,17 @@
       width: 45px; /* Set width as needed */
       height: 35px;
 }
+
+.parent-container {
+  display: flex;
+}
+
+.left-child {
+  flex: 1; /* This makes left-div take remaining space */
+  padding: 10px;
+}
+
+.right-child {
+  flex: 0 0 70%; /* This makes right-div take 70% of space */
+  padding: 10px;
+}

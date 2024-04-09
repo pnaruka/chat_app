@@ -4,12 +4,19 @@ import { getUser } from '../contexts_store/reducer/user'
 import './Drawer.css';
 import { useLogout } from '../hooks/useLogOut';
 import { useSearchUsers } from '../hooks/useSearchUsers';
+import { useCreateChat } from '../hooks/useCreateChats';
 
 const Drawer = () => {
     const {fetchUsers, searchResults} = useSearchUsers();
+    const {createChat} = useCreateChat();
     const user = useSelector(getUser);
     const {logout} = useLogout();
     const [searchKey, setSearchKey] = useState('');
+
+    const newChatHandler = async(chatId)=>{
+        await createChat(user, chatId);
+        window.location.reload(false);
+    }
 
     return (
         <nav className="navbar bg-body-tertiary fixed-top">
@@ -35,8 +42,11 @@ const Drawer = () => {
                             <div className="row row-cols-1 row-cols-md-1 g-4">
                             {searchResults.map((item) =>
                                 <div className="col" key={item._id}>
-                                  <div className="card">
-                                    <div className="card-body">
+                                  <div className="card parent-container">
+                                    <div className='left-child' onClick={()=>{newChatHandler(item._id)}}>
+                                        <img src={item.profilePic} alt={item.name} height="50px" width="50px" />
+                                    </div>
+                                    <div className="card-body right-child">
                                       <h5 className="card-title">{item.name}</h5>
                                       <p className="card-text">{item.email || ""}</p>
                                     </div>
