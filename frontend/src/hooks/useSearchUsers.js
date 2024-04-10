@@ -1,13 +1,19 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import axios from 'axios';
 
 
 export const useSearchUsers = ()=>{
+    const [searchKey, setSearchKey] = useState('');
     const [searchResults, setSearchResults] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
-    const fetchUsers = async (searchKey, user)=>{
+    useEffect(()=>{
+        if(searchKey === '')
+        setSearchResults(null);
+    },[searchKey])
+
+    const fetchUsers = async (user)=>{
         setIsLoading(true);
         setError(null);
         const headers = { 'Authorization': `Bearer ${user.token}` };
@@ -27,5 +33,5 @@ export const useSearchUsers = ()=>{
 
         setIsLoading(false);
     }
-    return {fetchUsers, searchResults, isLoading, error};
+    return {fetchUsers, searchResults, searchKey, setSearchKey, isLoading, error};
 };

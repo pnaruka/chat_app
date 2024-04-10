@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { getUser } from '../contexts_store/reducer/user'
 import './Drawer.css';
@@ -7,11 +7,10 @@ import { useSearchUsers } from '../hooks/useSearchUsers';
 import { useCreateChat } from '../hooks/useCreateChats';
 
 const Drawer = () => {
-    const {fetchUsers, searchResults} = useSearchUsers();
+    const {fetchUsers, searchResults, searchKey, setSearchKey} = useSearchUsers();
     const {createChat} = useCreateChat();
     const user = useSelector(getUser);
     const {logout} = useLogout();
-    const [searchKey, setSearchKey] = useState('');
 
     const newChatHandler = async(chatId)=>{
         await createChat(user, chatId);
@@ -35,7 +34,7 @@ const Drawer = () => {
                             <input className="form-control me-2" type="search" placeholder="Type a name" aria-label="Search"
                             value={searchKey}
                             onChange={(e)=> setSearchKey(e.target.value)} />
-                            <button className="btn btn-outline-success" type="submit" onClick={()=>{fetchUsers(searchKey,user)}}>Search</button>
+                            <button className="btn btn-outline-success" type="submit" onClick={()=>{fetchUsers(user)}}>Search</button>
                         </div>
                         { searchResults && searchKey ?
                             <div className="d-flex mt-3">
