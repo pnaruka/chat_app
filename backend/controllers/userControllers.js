@@ -79,13 +79,15 @@ const loginUser = asyncHandler(
 )
 
 const allUsers =  asyncHandler( async(req, res) => {
+    if(!req.query.search){
+        return res.status(400).send("Please provide the query")
+    }
     const keyword = req.query.search ? {
         $or: [
             { name: {$regex: req.query.search, $options: "i"}},
             { email: {$regex: req.query.search, $options: "i"}}
         ]
     } : {};
-
     const users = await UserModel.find(keyword).find({_id:{$ne: req.user._id}}).select("-password");
     if(!users){
         res.status(400);
