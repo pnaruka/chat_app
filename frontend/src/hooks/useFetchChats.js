@@ -35,7 +35,7 @@ export const useFetchChats = ()=>{
         })
         .catch((error)=>{
             setIsLoading(false);
-            setError(error.response.data.message);
+            setError(error.response.data);
         });
 
         setIsLoading(false);
