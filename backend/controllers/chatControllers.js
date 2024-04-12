@@ -71,7 +71,7 @@ const createGroup = asyncHandler(async (req, res) => {
         return res.status(400).json("Please fill all the fields.");
     }
 
-    var users = JSON.parse(req.body.users);
+    var users = req.body.users;
 
     if (users.length < 2) {
         return res.status(400).json("Please add at least 2 members.");
