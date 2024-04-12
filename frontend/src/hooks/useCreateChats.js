@@ -24,5 +24,27 @@ export const useCreateChat = ()=>{
 
         setIsLoading(false);
     }
-    return {createChat, isLoading, error};
+
+    const createGroupChat = async (user, groupUsers, groupName)=>{
+        setIsLoading(true);
+        setError(null);
+        
+        const headers = { 'Authorization': `Bearer ${user.token}` };
+        await axios.post('http://localhost:5000/chat/group/create',{users: groupUsers, groupName}, {
+            headers: headers
+          })
+        .then(()=>{
+            setIsLoading(false);
+            console.log('Created');
+        })
+        .catch((error)=>{
+            setIsLoading(false);
+            console.log(error.response);
+            setError(error.response.data.message);
+        });
+        
+        setIsLoading(false);
+    }
+    
+    return {createChat, createGroupChat, isLoading, error};
 };
