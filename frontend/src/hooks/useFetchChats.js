@@ -18,18 +18,21 @@ export const useFetchChats = ()=>{
           })
         .then((res)=>{
             setIsLoading(false);
+            //console.log(res.data);
             dispatch(assignChats(res.data.map((chat) => {
                 if (chat.isGroupChat)
                   return {
                     _id: chat._id,
                     chatName: chat.chatName,
-                    users: chat.users
+                    users: chat.users,
+                    lastMessage: chat.lastMessage
                   }
                 else
                   return {
                     _id: chat._id,
                     chatName: chat.users.find(u => u.email !== user.email).name,
-                    users: chat.users
+                    users: chat.users,
+                    lastMessage: chat.lastMessage
                   }
               })))
         })
