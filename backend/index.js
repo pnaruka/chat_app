@@ -6,6 +6,7 @@ const ChatRouter = require('./routes/ChatRouter');
 const requireAuth = require('./middlewares/requireAuth');
 const { notFound, errorHandler } = require('./middlewares/errorHandlers');
 const cors = require('cors');
+const MessageRouter = require('./routes/MessageRouter');
 
 configDotenv({path:'./.env'});
 const port = process.env.PORT || 5000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/user',UserRouter);
 app.use(requireAuth);
 app.use('/chat', ChatRouter);
+app.use('/message', MessageRouter);
 
 app.get('/', (req,res)=>{
     return res.send("Hallo");
