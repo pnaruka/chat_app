@@ -37,13 +37,13 @@ const createMsg = asyncHandler( async(req, res)=>{
 });
 
 const getAllMsg = asyncHandler( async(req, res)=>{
-    const {chatId} = req.body;
+    const chatId = req.query.chatId;
     if(!chatId){
         return res.status(400).send('Please provide all required fields.');
     }
 
     try {
-        const allMessages = await MessageModel.find({chat: chatId}).populate('sender','name profilePic');
+        const allMessages = await MessageModel.find({chat: chatId}).populate('sender','name profilePic email');
 
         res.status(201).json(allMessages);
 
