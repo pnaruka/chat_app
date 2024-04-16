@@ -5,11 +5,13 @@ import { useFetchChats } from '../hooks/useFetchChats';
 import { getChats } from '../contexts_store/reducer/chats';
 import addIcon from '../icons/addIcon.svg'
 import GroupModal from '../components/GroupModal';
+import { useFetchMsgs } from '../hooks/useFetchMsgs';
 
 const ChatPage = () => {
   const user = useSelector(getUser);
   const chats = useSelector(getChats);
   const { fetchChats, error } = useFetchChats();
+  const {fetchMsgs} = useFetchMsgs();
 
   useEffect(() => {
     //if (user)
@@ -27,7 +29,7 @@ const ChatPage = () => {
         {chats ?
           <div className="row row-cols-1 row-cols-md-1 g-4">
             {chats.map((chat) =>
-              <div className="col" key={chat._id}>
+              <div className="col" key={chat._id} onClick={()=>{fetchMsgs(user,chat._id)}}>
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">{chat.chatName}</h5>

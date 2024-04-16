@@ -1,0 +1,50 @@
+/* Other CSS remains unchanged */
+
+.message {
+    margin-bottom: 20px;
+    max-width: 70%; /* Limiting message width for better readability */
+}
+
+.message.current-user {
+    margin-left: 30%; /* Pushing current user's message to the left */
+}
+
+.message-sender {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.8em; /* Adjusting sender's name size */
+}
+
+.message-text {
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.input-box {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Aligning input box items */
+}
+
+.input-box input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.input-box button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-box button:hover {
+    background-color: #0056b3;
+}
